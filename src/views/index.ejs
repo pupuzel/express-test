@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="my-btn">연결</button>
+
+    <script>
+        document.querySelector('#my-btn').addEventListener('click',() =>{
+            WSconnection()
+        })
+
+
+        function httpSend(){
+            var keyCode = 'test'
+            var url = '/save/key'
+            var param = JSON.stringify({keyCode})
+
+            var xhr = new XMLHttpRequest()
+            xhr.open('POST',url)
+            xhr.setRequestHeader('Content-type','application/json')
+            xhr.send(param)
+
+            xhr.addEventListener('load',() => {
+                console.log(xhr.responseText)
+            })
+        }
+
+        function WSconnection(){
+            // 웹소켓 전역 객체 생성
+            window.ws = new WebSocket("ws://localhost:3100");
+
+            // 연결이 수립되면 서버에 메시지를 전송한다
+            ws.onopen = function(event) {
+                ws.send("Client message: Hi!");
+            }
+
+            // 서버로 부터 메시지를 수신한다
+            ws.onmessage = function(event) {
+                console.log("Server message: ", event.data);
+            }
+
+            // error event handler
+            ws.onerror = function(event) {
+                console.log("Server error message: ", event.data);
+            }
+        }
+
+        
+    </script>
+</body>
+</html>
