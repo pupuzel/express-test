@@ -5,9 +5,7 @@ import path from 'path';
 const __dirname = path.resolve();
 const app = express()
 
-app.listen(3000,function(){
-    console.log('hi hi')
-})
+app.listen(3000)
 
 app.use(express.static('public'))
 app.use(bodyParser.json())
